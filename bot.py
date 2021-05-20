@@ -7,7 +7,8 @@ import json
 from datetime import date
 from datetime import timedelta
 load_dotenv()
-new = os.environ.get("code")
+new = os.environ.get("CODE")
+api = os.environ.get("API")
 dateto=date.today()
 dateis=str(dateto) #Current date in string
 yesterday = dateto - timedelta(days = 1)
@@ -22,7 +23,7 @@ def checkKey(dict, key):
         return False
         
 print('ok1')
-url = "https://api.covid19india.org/v4/min/timeseries.min.json"
+url = api
 
 
 
