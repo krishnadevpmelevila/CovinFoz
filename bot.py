@@ -1,10 +1,13 @@
+from dotenv import load_dotenv
+import os
 from telegram import *
 from telegram.ext import *
 import requests
 import json
 from datetime import date
 from datetime import timedelta
-
+load_dotenv()
+new = os.environ.get("code")
 dateto=date.today()
 dateis=str(dateto) #Current date in string
 yesterday = dateto - timedelta(days = 1)
@@ -62,10 +65,10 @@ print('ok2')
 
 
 # Bot Auth
-bot = Bot("1606649142:AAGStY9oxLvCboLaz-F-hGuZqDQW_dTQ4Jg")
+bot = Bot(new)
 
 # Bot initialise
-updater=Updater("1606649142:AAGStY9oxLvCboLaz-F-hGuZqDQW_dTQ4Jg",use_context=True)
+updater=Updater(new,use_context=True)
 dispatcher=updater.dispatcher
 # START
 def Start(update:Update,context:CallbackContext):
