@@ -55,15 +55,15 @@ done=checkKey(testData, 'delta') #Check for current data is available
 
     
 # Total Datas
-tc=todos['reports']
+tcs=todos['reports']
 
-for data in tc:
+for data in tcs:
     if data["date"] == dateis:
         rc=data['today_positive']
         
     elif data["date"] == dateyes:
         rc=data['today_positive']
-        
+tc=todos2['KL']['dates'][dateis2]['total']['confirmed']        
 td=todos2['KL']['dates'][dateis2]['total']['deceased']
 tr=todos2['KL']['dates'][dateis2]['total']['recovered']
 tt=todos2['KL']['dates'][dateis2]['total']['tested']
