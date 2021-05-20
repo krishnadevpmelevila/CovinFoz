@@ -9,9 +9,13 @@ from datetime import timedelta
 load_dotenv()
 new = os.environ.get("CODE")
 api = os.environ.get("API")
+api2 = os.environ.get("API2")
 dateto=date.today()
-dateis=str(dateto) #Current date in string
+dateis2=str(dateto)
+dateis=str(dateto.strftime("%d-%m-%Y")) #Current date in string
 yesterday = dateto - timedelta(days = 1)
+dateYes1=str(yesterday.strftime("%d-%m-%Y")) #Current date in string
+
 dateyes = str(yesterday)
 
 
@@ -21,38 +25,71 @@ def checkKey(dict, key):
         return True
     else:
         return False
-        
+def vCheck(dict, key):
+      
+    if key in dict.keys():
+        return True
+    else:
+        return False
+def tCheck(dict, key):
+      
+    if key in dict.keys():
+        return True
+    else:
+        return False
+            
 print('ok1')
 url = api
+url2=api2
 
 
-
+print(dateis)
 response = requests.request("GET", url)
+response2 = requests.request("GET", url2)
 todos = json.loads(response.text)
-newdata=todos['KL']['dates'][dateis]
+todos2 = json.loads(response2.text)
 
-done=checkKey(newdata, 'delta') #Check for current data is available
+testData=todos2['KL']['dates'][dateis2]
+
+done=checkKey(testData, 'delta') #Check for current data is available
 
     
 # Total Datas
-tc=todos['KL']['dates'][dateis]['total']['confirmed']
-td=todos['KL']['dates'][dateis]['total']['deceased']
-tr=todos['KL']['dates'][dateis]['total']['recovered']
-tt=todos['KL']['dates'][dateis]['total']['tested']
-tv=todos['KL']['dates'][dateis]['total']['vaccinated']
+tc=todos['reports']
+
+for data in tc:
+    if data["date"] == dateis:
+        rc=data['today_positive']
+        
+    elif data["date"] == dateyes:
+        rc=data['today_positive']
+        
+td=todos2['KL']['dates'][dateis2]['total']['deceased']
+tr=todos2['KL']['dates'][dateis2]['total']['recovered']
+tt=todos2['KL']['dates'][dateis2]['total']['tested']
+tv=todos2['KL']['dates'][dateis2]['total']['vaccinated']
 # Recent Datas
 if(done):
-    rc=todos['KL']['dates'][dateis]['delta']['confirmed']
-    rd=todos['KL']['dates'][dateis]['delta']['deceased']
-    rr=todos['KL']['dates'][dateis]['delta']['recovered']
-    rt=todos['KL']['dates'][dateis]['delta']['tested']
-    rv=todos['KL']['dates'][dateis]['delta']['vaccinated']
+    vData=todos2['KL']['dates'][dateis2]['delta']
+    tDone=tCheck(vData,'tested')
+    vDone=vCheck(vData,'vaccinated')
+    rd=todos2['KL']['dates'][dateis2]['delta']['deceased']
+    rr=todos2['KL']['dates'][dateis2]['delta']['recovered']
+    if(tDone):
+        rt=todos2['KL']['dates'][dateis2]['delta']['tested']
+    else:
+        rt=todos2['KL']['dates'][dateyes]['delta']['tested']
+    if(vDone):
+        rv=todos2['KL']['dates'][dateis2]['delta']['vaccinated']
+    else:
+        rv=todos2['KL']['dates'][dateyes]['delta']['vaccinated']
+
 else:
-    rc=todos['KL']['dates'][dateyes]['delta']['confirmed']
-    rd=todos['KL']['dates'][dateyes]['delta']['deceased']
-    rr=todos['KL']['dates'][dateyes]['delta']['recovered']
-    rt=todos['KL']['dates'][dateyes]['delta']['tested']
-    rv=todos['KL']['dates'][dateyes]['delta']['vaccinated']
+    
+    rd=todos2['KL']['dates'][dateyes]['delta']['deceased']
+    rr=todos2['KL']['dates'][dateyes]['delta']['recovered']
+    rt=todos2['KL']['dates'][dateyes]['delta']['tested']
+    rv=todos2['KL']['dates'][dateyes]['delta']['vaccinated']
 
 
 
@@ -62,8 +99,6 @@ print('ok2')
 
 # ncs=todos['total_values']['newlyConfirmedCases']
 # dth=todos['stats']['totalDeaths']
-
-
 
 # Bot Auth
 bot = Bot(new)
@@ -132,17 +167,17 @@ tv_value=CommandHandler('tv',totalVaccinated)
 dispatcher.add_handler(tv_value)
 updater.start_polling()
 
+
+# Recent confirmed cases
+def recentConfirm(update:Update,context:CallbackContext):
+	bot.send_message(
+		chat_id=update.effective_chat.id,
+		text="Today's confirmed cases in Kerala is: "+str(rc)
+	)
+rc_value=CommandHandler('rc',recentConfirm)
+dispatcher.add_handler(rc_value)
+updater.start_polling()
 if(done):
-    # Recent confirmed cases
-    def recentConfirm(update:Update,context:CallbackContext):
-    	bot.send_message(
-    		chat_id=update.effective_chat.id,
-    		text="Today's confirmed cases in Kerala is: "+str(rc)
-    	)
-    rc_value=CommandHandler('rc',recentConfirm)
-    dispatcher.add_handler(rc_value)
-    updater.start_polling()
-    
     # Recent Deaths
     def recentDeath(update:Update,context:CallbackContext):
     	bot.send_message(
@@ -183,9 +218,9 @@ if(done):
     rv_value=CommandHandler('rv',recentVaccinated)
     dispatcher.add_handler(rv_value)
     updater.start_polling()
-
 else:
-    # Recent confirmed cases
+    
+    # # Recent confirmed cases
     def recentConfirm(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
@@ -235,3 +270,6 @@ else:
     rv_value=CommandHandler('rv',recentVaccinated)
     dispatcher.add_handler(rv_value)
     updater.start_polling()
+    
+    
+print("working...")
