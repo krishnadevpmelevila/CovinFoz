@@ -189,7 +189,7 @@ else:
     def recentConfirm(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
-    		text="Yesterday's confirmed cases in Kerala is: "+str(rc)+"\n Today's datas will be updated by evening"
+    		text="Yesterday's confirmed cases in Kerala is: "+str(rc)+"\n Today's datas will be updated soon!"
     	)
     rc_value=CommandHandler('rc',recentConfirm)
     dispatcher.add_handler(rc_value)
@@ -199,7 +199,7 @@ else:
     def recentDeath(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
-    		text="Yesterday's death in Kerala is: "+str(rd)+"\n Today's datas will be updated by evening"
+    		text="Yesterday's death in Kerala is: "+str(rd)+"\n Today's datas will be updated soon!"
     	)
     rd_value=CommandHandler('rd',recentDeath)
     dispatcher.add_handler(rd_value)
@@ -210,7 +210,7 @@ else:
     def recentRecovery(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
-    		text="Yesterday's recovery cases in Kerala is: "+str(rr)+"\n Today's datas will be updated by evening"
+    		text="Yesterday's recovery cases in Kerala is: "+str(rr)+"\n Today's datas will be updated soon!"
     	)
     rr_value=CommandHandler('rr',recentRecovery)
     dispatcher.add_handler(rr_value)
@@ -220,7 +220,7 @@ else:
     def recentTested(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
-    		text="Yesterday's tests in Kerala is: "+str(rt)+"\n Today's datas will be updated by evening"
+    		text="Yesterday's tests in Kerala is: "+str(rt)+"\n Today's datas will be updated soon!"
     	)
     rt_value=CommandHandler('rt',recentTested)
     dispatcher.add_handler(rt_value)
@@ -230,7 +230,7 @@ else:
     def recentVaccinated(update:Update,context:CallbackContext):
     	bot.send_message(
     		chat_id=update.effective_chat.id,
-    		text="Yesterday's vaccination in Kerala is: "+str(rv)+"\n Today's datas will be updated by evening"
+    		text="Yesterday's vaccination in Kerala is: "+str(rv)+"\n Today's datas will be updated soon!"
     	)
     rv_value=CommandHandler('rv',recentVaccinated)
     dispatcher.add_handler(rv_value)
