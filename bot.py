@@ -1,3 +1,4 @@
+from enum import Flag
 from dotenv import load_dotenv
 import os
 from telegram import *
@@ -49,26 +50,42 @@ response2 = requests.request("GET", url2)
 todos = json.loads(response.text)
 todos2 = json.loads(response2.text)
 
-testData=todos2['KL']['dates'][dateis2]
+checking=todos2['KL']['dates']
 
-done=checkKey(testData, 'delta') #Check for current data is available
-
+checked=checkKey(checking, dateis2) #Check for current date is available
+if(checked):
+    testData=todos2['KL']['dates'][dateis2]
+    done=checkKey(testData, 'delta') #Check for current data is available
+else:
+    done=False
     
 # Total Datas
 tcs=todos['reports']
 
 for data in tcs:
+    
     if data["date"] == dateis:
         rc=data['today_positive']
         
-    elif data["date"] == dateyes:
+    elif data["date"] == dateYes1:
         rc=data['today_positive']
-tc=todos2['KL']['dates'][dateis2]['total']['confirmed']        
-td=todos2['KL']['dates'][dateis2]['total']['deceased']
-tr=todos2['KL']['dates'][dateis2]['total']['recovered']
-tt=todos2['KL']['dates'][dateis2]['total']['tested']
-tv=todos2['KL']['dates'][dateis2]['total']['vaccinated']
-# Recent Datas
+        flag=True
+    else:
+        rc="Program Error please contact @krishnadev"
+if(checked):
+    tc=todos2['KL']['dates'][dateis2]['total']['confirmed']        
+    td=todos2['KL']['dates'][dateis2]['total']['deceased']
+    tr=todos2['KL']['dates'][dateis2]['total']['recovered']
+    tt=todos2['KL']['dates'][dateis2]['total']['tested']
+    tv=todos2['KL']['dates'][dateis2]['total']['vaccinated']
+else:
+    tc=todos2['KL']['dates'][dateyes]['total']['confirmed']        
+    td=todos2['KL']['dates'][dateyes]['total']['deceased']
+    tr=todos2['KL']['dates'][dateyes]['total']['recovered']
+    tt=todos2['KL']['dates'][dateyes]['total']['tested']
+    tv=todos2['KL']['dates'][dateyes]['total']['vaccinated']
+# Recent Data
+
 if(done):
     vData=todos2['KL']['dates'][dateis2]['delta']
     tDone=tCheck(vData,'tested')
@@ -85,11 +102,15 @@ if(done):
         rv=todos2['KL']['dates'][dateyes]['delta']['vaccinated']
 
 else:
-    
+    vData=todos2['KL']['dates'][dateyes]['delta']
+    vDone=vCheck(vData,'vaccinated')
     rd=todos2['KL']['dates'][dateyes]['delta']['deceased']
     rr=todos2['KL']['dates'][dateyes]['delta']['recovered']
     rt=todos2['KL']['dates'][dateyes]['delta']['tested']
-    rv=todos2['KL']['dates'][dateyes]['delta']['vaccinated']
+    if(vDone):
+        rv=todos2['KL']['dates'][dateyes]['delta']['vaccinated']
+    else:
+        rv="Data not available"
 
 
 
@@ -166,7 +187,15 @@ def totalVaccinated(update:Update,context:CallbackContext):
 tv_value=CommandHandler('tv',totalVaccinated)
 dispatcher.add_handler(tv_value)
 updater.start_polling()
-
+if(flag):
+    def recentConfirm(update:Update,context:CallbackContext):
+    	bot.send_message(
+    		chat_id=update.effective_chat.id,
+    		text="Yesterday's confirmed cases in Kerala is: "+str(rc)+"\n Today's datas will be updated soon!"
+    	)
+    rc_value=CommandHandler('rc',recentConfirm)
+    dispatcher.add_handler(rc_value)
+    updater.start_polling()
 
 # Recent confirmed cases
 def recentConfirm(update:Update,context:CallbackContext):
