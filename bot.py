@@ -53,6 +53,7 @@ todos2 = json.loads(response2.text)
 checking=todos2['KL']['dates']
 
 checked=checkKey(checking, dateis2) #Check for current date is available
+
 if(checked):
     testData=todos2['KL']['dates'][dateis2]
     done=checkKey(testData, 'delta') #Check for current data is available
@@ -66,10 +67,11 @@ for data in tcs:
     
     if data["date"] == dateis:
         rc=data['today_positive']
-        
+        flag=False
     elif data["date"] == dateYes1:
         rc=data['today_positive']
         flag=True
+        
     else:
         rc="Program Error please contact @krishnadev"
 if(checked):
@@ -88,6 +90,7 @@ else:
 
 if(done):
     vData=todos2['KL']['dates'][dateis2]['delta']
+    
     tDone=tCheck(vData,'tested')
     vDone=vCheck(vData,'vaccinated')
     rd=todos2['KL']['dates'][dateis2]['delta']['deceased']
@@ -103,6 +106,7 @@ if(done):
 
 else:
     vData=todos2['KL']['dates'][dateyes]['delta']
+    
     vDone=vCheck(vData,'vaccinated')
     rd=todos2['KL']['dates'][dateyes]['delta']['deceased']
     rr=todos2['KL']['dates'][dateyes]['delta']['recovered']
