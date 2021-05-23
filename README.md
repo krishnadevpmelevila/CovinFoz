@@ -20,6 +20,7 @@ pip install requirement.txt
     ```bash
     python bot.py
     ```
+##SEARCH @CovinFoz_bot ON TELEGRAM TO VIEW THE WORKING LIVE BOT 
 
 
 ## Contributing
