@@ -8,6 +8,7 @@ import json
 from datetime import date
 from datetime import timedelta
 load_dotenv()
+print("Check 1")
 new = os.environ.get("CODE")
 api = os.environ.get("API")
 api2 = os.environ.get("API2")
