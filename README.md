@@ -17,7 +17,7 @@ pip install requirement.txt
 4. Change the API URL on same file to https://keralastats.coronasafe.live/testreports.json
 5. Run ```bash 
    python bot.py
-   ```
+             ```
 
 
 ## Contributing
