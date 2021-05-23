@@ -12,7 +12,7 @@ pip install requirement.txt
 ## Usage
 
 1. Open Telegram app in your device and search for @botfather 
-2. Use it to initialise a new bot 
+2. Use it to initialize a new bot 
 3. Grab the bot token and paste it on .env.example file
 4. Change the API URL on same file to https://keralastats.coronasafe.live/testreports.json
 5. Run :
