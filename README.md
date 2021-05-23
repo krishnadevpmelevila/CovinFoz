@@ -14,8 +14,8 @@ pip install requirement.txt
 1. Open Telegram app in your device and search for @botfather 
 2. Use it to initialize a new bot 
 3. Grab the bot token and paste it on .env.example file
-4. Rename .env.example to .env
-5. Change the API URL on same file to https://keralastats.coronasafe.live/testreports.json
+4. Change the API URL on same file to https://keralastats.coronasafe.live/testreports.json
+5. Rename .env.example to .env
 6. Run :
     ```bash
     python bot.py
